@@ -234,7 +234,7 @@ yarn
 
 ### Решение
 
-Откройте в новом окне указанный url (в данном случае `wss://nlp2.devices.sberbank.ru/vps/`), но замените `wss://` на `https://` (в данном случае получится `https://nlp2.devices.sberbank.ru/vps/`). На открывшимся сайте примите недействительные сертификаты.
+Откройте в новом окне указанный url (в данном случае `wss://nlp2.devices.sberbank.ru/vps/`), но замените `wss://` на `https://` (в данном случае получится `https://nlp2.devices.sberbank.ru/vps/`). На открывшемся сайте примите недействительные сертификаты.
 ![/doc/certificate_error1.png](/doc/certificate_error.png) ![/doc/certificate_error2.png](/doc/certificate_error2.png)
 
 Перезагрузите страницу приложения.
