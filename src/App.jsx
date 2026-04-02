@@ -5,6 +5,7 @@ import './App.css';
 import { TaskList } from './pages/TaskList';
 
 const initializeAssistant = (getState /*: any*/, getRecoveryState) => {
+  console.log(process.env.REACT_APP_SMARTAPP, process.env.REACT_APP_TOKEN);
   if (process.env.NODE_ENV === 'development') {
     return createSmartappDebugger({
       token: process.env.REACT_APP_TOKEN ?? '',
@@ -12,7 +13,7 @@ const initializeAssistant = (getState /*: any*/, getRecoveryState) => {
       getState,                                           
       // getRecoveryState: getState,                                           
       nativePanel: {
-        defaultText: 'Говорите!',
+        defaultText: 'Добавь тестовый тест',
         screenshotMode: false,
         tabIndex: -1,
     },
@@ -79,7 +80,7 @@ export class App extends React.Component {
         })),
         ignored_words: [
           'добавить','установить','запиши','поставь','закинь','напомнить', // addNote.sc
-          'удалить', 'удали',  // deleteNote.sc
+          'удалить', 'удали', 'стереть', 'перезапустить', // deleteNote.sc
           'выполни', 'выполнил', 'сделал' // выполнил|сделал
         ],
       },
@@ -159,9 +160,16 @@ export class App extends React.Component {
 
   delete_note(action) {
     console.log('delete_note', action);
-    this.setState({
-      notes: this.state.notes.filter(({ id }) => id !== action.id),
-    });
+    if (action.id === -1) {
+      return this.setState({
+        notes: [],
+      });
+    }
+    else {
+      this.setState({
+        notes: this.state.notes.filter(({ id }) => id !== action.id),
+      });
+    } 
   }
 
   render() {
