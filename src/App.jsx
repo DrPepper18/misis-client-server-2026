@@ -1,11 +1,9 @@
 import React from 'react';
 import { createAssistant, createSmartappDebugger } from '@salutejs/client';
-
 import './App.css';
-import { TaskList } from './pages/TaskList';
+import TripPlanner from './components/TripPlanner';
 
-const initializeAssistant = (getState /*: any*/, getRecoveryState) => {
-  console.log(process.env.REACT_APP_SMARTAPP, process.env.REACT_APP_TOKEN);
+const initializeAssistant = (getState) => {
   if (process.env.NODE_ENV === 'development') {
     return createSmartappDebugger({
       token: process.env.REACT_APP_TOKEN ?? '',
@@ -13,180 +11,123 @@ const initializeAssistant = (getState /*: any*/, getRecoveryState) => {
       getState,                                           
       // getRecoveryState: getState,                                           
       nativePanel: {
-        defaultText: 'Добавь тестовый тест',
+        defaultText: 'Говорите!',
         screenshotMode: false,
         tabIndex: -1,
     },
     });
-  } else {
-  return createAssistant({ getState });
   }
+  return createAssistant({ getState });
 };
 
 export class App extends React.Component {
   constructor(props) {
+    console.log("SMARTAPP NAME:", process.env.REACT_APP_SMARTAPP);
+    console.log("TOKEN LENGTH:", process.env.REACT_APP_TOKEN?.length);
     super(props);
-    console.log('constructor');
-
-    this.state = {
-      notes: [{ id: Math.random().toString(36).substring(7), title: 'тест' }],
+    this.state = { 
+      answer: 'Куда вы хотите поехать?', 
+      tripData: null,
+      loading: false 
     };
 
     this.assistant = initializeAssistant(() => this.getStateForAssistant());
 
-    this.assistant.on('data', (event /*: any*/) => {
-      console.log(`assistant.on(data)`, event);
-      if (event.type === 'character') {
-        console.log(`assistant.on(data): character: "${event?.character?.id}"`);
-      } else if (event.type === 'insets') {
-        console.log(`assistant.on(data): insets`);
-      } else {
-        const { action } = event;
-        this.dispatchAssistantAction(action);
-      }
+    // Единый обработчик входящих данных
+    this.assistant.on('data', (event) => {
+      console.log('--- RAW EVENT RECEIVED ---', event); // Это покажет событие, даже если оно пустое
+      this.handleAssistantAction(event);
     });
-
-    this.assistant.on('start', (event) => {
-      let initialData = this.assistant.getInitialData();
-
-      console.log(`assistant.on(start)`, event, initialData);
-    });
-
-    this.assistant.on('command', (event) => {
-      console.log(`assistant.on(command)`, event);
-    });
-
-    this.assistant.on('error', (event) => {
-      console.log(`assistant.on(error)`, event);
-    });
-
-    this.assistant.on('tts', (event) => {
-      console.log(`assistant.on(tts)`, event);
-    });
-  }
-
-  componentDidMount() {
-    console.log('componentDidMount');
   }
 
   getStateForAssistant() {
-    console.log('getStateForAssistant: this.state:', this.state);
-    const state = {
-      item_selector: {
-        items: this.state.notes.map(({ id, title }, index) => ({
-          number: index + 1,
-          id,
-          title,
-        })),
-        ignored_words: [
-          'добавить','установить','запиши','поставь','закинь','напомнить', // addNote.sc
-          'удалить', 'удали', 'стереть', 'перезапустить', // deleteNote.sc
-          'выполни', 'выполнил', 'сделал' // выполнил|сделал
-        ],
-      },
-    };
-    console.log('getStateForAssistant: state:', state);
-    return state;
+    return { screen: 'main', hasTrip: !!this.state.tripData };
   }
 
-  dispatchAssistantAction(action) {
-    console.log('dispatchAssistantAction', action);
-    if (action) {
-      switch (action.type) {
-        case 'add_note':
-          return this.add_note(action);
+  handleAssistantAction(event) {
+    console.log("ПОЛУЧЕНО СОБЫТИЕ:", event);
 
-        case 'done_note':
-          return this.done_note(action);
-
-        case 'delete_note':
-          return this.delete_note(action);
-
-        default:
-          throw new Error();
-      }
-    }
-  }
-
-  add_note(action) {
-    console.log('add_note', action);
-    this.setState({
-      notes: [
-        ...this.state.notes,
-        {
-          id: Math.random().toString(36).substring(7),
-          title: action.note,
-          completed: false,
-        },
-      ],
-    });
-  }
-
-  done_note(action) {
-    console.log('done_note', action);
-    this.setState({
-      notes: this.state.notes.map((note) =>
-        note.id === action.id ? { ...note, completed: !note.completed } : note
-      ),
-    });
-  }
-
-  _send_action_value(action_id, value) {
-    const data = {
-      action: {
-        action_id: action_id,
-        parameters: {
-          // значение поля parameters может быть любым, но должно соответствовать серверной логике
-          value: value, // см.файл src/sc/noteDone.sc смартаппа в Studio Code
-        },
-      },
-    };
-    const unsubscribe = this.assistant.sendData(data, (data) => {
-      // функция, вызываемая, если на sendData() был отправлен ответ
-      const { type, payload } = data;
-      console.log('sendData onData:', type, payload);
-      unsubscribe();
-    });
-  }
-
-  play_done_note(id) {
-    const completed = this.state.notes.find(({ id }) => id)?.completed;
-    if (!completed) {
-      const texts = ['Молодец!', 'Красавчик!', 'Супер!'];
-      const idx = (Math.random() * texts.length) | 0;
-      this._send_action_value('done', texts[idx]);
-    }
-  }
-
-  delete_note(action) {
-    console.log('delete_note', action);
-    if (action.id === -1) {
-      return this.setState({
-        notes: [],
-      });
-    }
-    else {
-      this.setState({
-        notes: this.state.notes.filter(({ id }) => id !== action.id),
-      });
+    // 1. Проверка по стандарту README (самый надежный вариант)
+    if (event.type === 'smart_app_data' && event.smart_app_data) {
+        const { type, payload } = event.smart_app_data;
+        console.log("Данные из smart_app_data:", payload);
+        this.generateTrip(payload.destination);
     } 
+    // 2. Резервная проверка (как в примере туду-листа)
+    else if (event.action) {
+        console.log("Данные из action:", event.action);
+        // Если данные пришли в старом формате
+        this.generateTrip(event.action.destination || event.action.note);
+    }
   }
+
+  generateTrip(destination) {
+    this.setState({ loading: true });
+
+    // База данных для моков
+    const mockData = {
+      'Сочи': {
+        flights: [{ airline: 'Aeroflot', price: 12000, time: '10:00' }, { airline: 'S7', price: 9800, time: '15:30' }],
+        hotels: [{ name: 'Radisson Blu Resort', stars: 5, price: 55000 }, { name: 'Sochi Park Hotel', stars: 3, price: 25000 }],
+        total: 34800
+      },
+      'Питер': {
+        flights: [{ airline: 'Rossiya', price: 7000, time: '08:00' }, { airline: 'Utair', price: 5500, time: '12:00' }],
+        hotels: [{ name: 'Астория', stars: 5, price: 70000 }, { name: 'Отель Невский', stars: 4, price: 30000 }],
+        total: 35500
+      },
+      'Казань': {
+        flights: [{ airline: 'Nordwind', price: 6000, time: '11:00' }],
+        hotels: [{ name: 'Kazan Palace', stars: 5, price: 40000 }, { name: 'Ibis Kazan', stars: 3, price: 15000 }],
+        total: 21000
+      }
+    };
+
+    // Ищем данные для города или берем дефолтные
+    const cityData = mockData[destination] || {
+      destination: destination,
+      flights: [{ airline: 'Pobeda', price: 5000, time: '07:00' }],
+      hotels: [{ name: 'Стандартный отель', stars: 3, price: 15000 }],
+      total: 20000
+    };
+
+    const tripOptions = {
+      destination: destination,
+      ...cityData
+    };
+
+    // Имитируем задержку сети
+    setTimeout(() => {
+      this.setState({ 
+        tripData: tripOptions, 
+        loading: false,
+        answer: `Готово! Нашел отличные варианты для поездки в ${destination}. Посмотрите на экран.`
+      });
+    }, 1200);
+  };
 
   render() {
-    console.log('render');
+    const { answer, loading, tripData } = this.state;
+
     return (
-      <>
-        <TaskList
-          items={this.state.notes}
-          onAdd={(note) => {
-            this.add_note({ type: 'add_note', note });
-          }}
-          onDone={(note) => {
-            this.play_done_note(note.id);
-            this.done_note({ type: 'done_note', id: note.id });
-          }}
-        />
-      </>
+      <div className="App">
+        <header className="App-header">
+          <h1>Планировщик туров</h1>
+        </header>
+
+        <main className="content">
+          <div className="status-bar">
+            {loading ? <p className="loader">Ищу лучшие предложения...</p> : <p>{answer}</p>}
+          </div>
+
+          {tripData && <TripPlanner tripData={tripData} />}
+        </main>
+
+        {/* Скрытый textarea для отладки или отображения лога */}
+        <div className="debug-panel">
+           <textarea value={answer} readOnly rows={4} />
+        </div>
+      </div>
     );
   }
 }

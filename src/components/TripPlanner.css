@@ -1,0 +1,79 @@
+.tp-root {
+  background: #23272f;
+  border-radius: 24px;
+  padding: 32px 24px;
+  margin: 32px auto;
+  max-width: 700px;
+  color: #fff;
+  box-shadow: 0 4px 32px 0 #0006;
+}
+.tp-header {
+  border-bottom: 1px solid #444a;
+  margin-bottom: 18px;
+  padding-bottom: 8px;
+}
+.tp-dest {
+  color: #4fd1c5;
+}
+.tp-info {
+  display: flex;
+  gap: 24px;
+  font-size: 1.1em;
+  margin-top: 6px;
+  color: #b2f5ea;
+}
+.tp-section {
+  margin: 18px 0 0 0;
+}
+.tp-cards {
+  display: flex;
+  gap: 18px;
+  flex-wrap: wrap;
+}
+.tp-card {
+  background: #313843;
+  border-radius: 16px;
+  padding: 18px 20px;
+  min-width: 180px;
+  flex: 1 1 200px;
+  box-shadow: 0 2px 8px 0 #0003;
+  margin-bottom: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.tp-card-title {
+  font-weight: bold;
+  font-size: 1.1em;
+  margin-bottom: 2px;
+}
+.tp-flight-num {
+  color: #63b3ed;
+}
+.tp-card-row {
+  font-size: 0.98em;
+}
+.tp-price {
+  color: #f6e05e;
+}
+.tp-summary {
+  margin-top: 24px;
+  font-size: 1.2em;
+  display: flex;
+  gap: 18px;
+  align-items: center;
+}
+.tp-over {
+  color: #f56565;
+  font-weight: bold;
+}
+.tp-in {
+  color: #68d391;
+  font-weight: bold;
+}
+.tp-no-data {
+  color: #f56565;
+  text-align: center;
+  font-size: 1.2em;
+  margin: 32px 0;
+}
