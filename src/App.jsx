@@ -52,24 +52,27 @@ export class App extends React.Component {
 
       // Слушаем именно тот action, который ты указал в sendActionToApp в JAICP
       if (type === 'show_flights') {
-        console.log("Данные рейсов получены:", payload);
-        
-        this.setState({
-            loading: false,
-            tripData: {
-              destination: payload.destination,
-              // Мапим данные из формата Aviasales в формат твоего TripPlanner
-              flights: payload.flights.map(f => ({
-                airline: f.airline || '—',
-                price: f.price,
-                departure: f.departure_at?.slice(11, 16),
-                arrival: f.return_at?.slice(11, 16) || '',
-                flightNumber: f.flight_number || '',
-                link: f.link || '#',
-              })),
-            },
-            answer: `Я нашёл несколько вариантов перелета в ${payload.destination}!`
-        });
+          this.setState({
+              loading: false,
+              tripData: {
+                  destination: payload.destination,
+                  flights: (payload.flights || []).map(f => ({
+                      airline: f.airline,
+                      price: f.price,
+                      departure: f.departure_at?.slice(11, 16),
+                      arrival: f.return_at?.slice(11, 16) || '',
+                      flightNumber: f.flight_number
+                  })),
+                  // Добавляем отели
+                  hotels: (payload.hotels || []).map(h => ({
+                      name: h.name || h.hotelName,
+                      price: h.priceAvg || h.price,
+                      stars: h.stars,
+                      id: h.hotelId || h.id
+                  }))
+              },
+              answer: `Нашёл билеты и отели в ${payload.destination}!`
+          });
       }
     }
   }
@@ -80,9 +83,9 @@ export class App extends React.Component {
 
     return (
       <div className="App">
-        <header className="App-header">
+        {/* <header className="App-header">
           <h1>Планировщик туров</h1>
-        </header>
+        </header> */}
 
         <main className="content">
           {tripData && <TripPlanner tripData={tripData} />}
