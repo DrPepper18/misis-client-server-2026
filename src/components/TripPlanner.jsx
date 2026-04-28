@@ -2,72 +2,82 @@ import React from 'react';
 import './TripPlanner.css';
 
 const TripPlanner = ({ tripData }) => {
-  if (!tripData) {
-    return <div className="tp-no-data">Нет данных о поездке</div>;
-  }
+    console.log("TripPlanner received tripData:", tripData);
+    if (!tripData) return null;
 
-  // Добавляем значения по умолчанию при деструктуризации, чтобы избежать undefined
-  const { 
-    destination = "Неизвестно", 
-    duration = 0, 
-    budget = 0, 
-    flights = [], 
-    hotels = [], 
-    totalCost = 0 
-  } = tripData;
+    const { destination, flights } = tripData;
 
-  // Функция-помощник для безопасного форматирования чисел
-  const formatPrice = (value) => (value || 0).toLocaleString();
+    // Функция для красивого форматирования цены
+    const formatPrice = (price) => {
+        return new Intl.NumberFormat('ru-RU', {
+            style: 'currency',
+            currency: 'RUB',
+            maximumFractionDigits: 0,
+        }).format(price);
+    };
 
-  return (
-    <div className="tp-root">
-      <div className="tp-header">
-        <h2>Путешествие в <span className="tp-dest">{destination}</span></h2>
-        <div className="tp-info">
-          <span>🗓️ {duration} дней</span>
-          {/* Используем безопасное форматирование */}
-          <span>💰 Бюджет: <b>{formatPrice(budget)} ₽</b></span>
-        </div>
-      </div>
+    // Функция для форматирования времени
+    const formatTime = (time) => {
+        if (!time) return '--:--';
+        if (typeof time === 'string' && time.includes(':')) return time;
+        return '--:--';
+    };
 
-      <div className="tp-section">
-        <h3>✈️ Авиабилеты</h3>
-        <div className="tp-cards">
-          {flights.map((flight, idx) => (
-            <div className="tp-card tp-flight" key={idx}>
-              <div className="tp-card-title">{flight.airline} <span className="tp-flight-num">{flight.flightNumber || ''}</span></div>
-              <div className="tp-card-row">🛫 {flight.departure || '—'} &rarr; 🛬 {flight.arrival || '—'}</div>
-              <div className="tp-card-row tp-price">Цена: <b>{formatPrice(flight.price)} ₽</b></div>
+    return (
+        <div className="trip-planner">
+            <h2 className="trip-title">✈️ Полеты в {destination}</h2>
+            
+            <div className="flights-container">
+                {flights && flights.length > 0 ? (
+                    flights.map((flight, index) => (
+                        <div key={index} className="flight-card">
+                            <div className="flight-header">
+                                {/* Логотип авиакомпании от Aviasales CDN */}
+                                <img 
+                                    src={`https://pics.avs.io/al_base/100/40/${flight.airline}.png`} 
+                                    alt={`Логотип авиакомпании ${flight.airline}`}
+                                    className="airline-logo" 
+                                    onError={(e) => {
+                                        e.target.style.display = 'none';
+                                    }}
+                                />
+                                <span className="flight-number">{flight.flightNumber || 'Рейс'}</span>
+                            </div>
+
+                            <div className="flight-info">
+                                <div className="time-block">
+                                    <span className="label">Вылет</span>
+                                    <span className="time">{formatTime(flight.departure)}</span>
+                                </div>
+                                
+                                <div className="price-block">
+                                    <span className="label">Цена</span>
+                                    <span className="price">{formatPrice(flight.price)}</span>
+                                </div>
+                            </div>
+
+                            <button 
+                                className="book-button" 
+                                onClick={() => {
+                                    window.open(`https://www.aviasales.ru${flight.link}`, '_blank');
+                                }}
+                            >
+                                Выбрать рейс
+                            </button>
+                        </div>
+                    ))
+                ) : (
+                    <p className="no-flights">
+                        😔 К сожалению, прямых рейсов в {destination} не найдено.
+                        <br />
+                        <span style={{ fontSize: '0.9em', marginTop: '12px', display: 'block' }}>
+                            Попробуйте изменить даты или пункт назначения
+                        </span>
+                    </p>
+                )}
             </div>
-          ))}
         </div>
-      </div>
-
-      <div className="tp-section">
-        <h3>🏨 Отели</h3>
-        <div className="tp-cards">
-          {hotels.map((hotel, idx) => (
-            <div className="tp-card tp-hotel" key={idx}>
-              <div className="tp-card-title">{hotel.name}</div>
-              <div className="tp-card-row">⭐ {hotel.stars} звезды</div>
-              {/* Исправляем названия полей (price vs pricePerNight) */}
-              <div className="tp-card-row">Цена за ночь: <b>{formatPrice(hotel.pricePerNight || hotel.price)} ₽</b></div>
-              <div className="tp-card-row">Всего: <b>{formatPrice(hotel.totalPrice || hotel.price)} ₽</b></div>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      <div className="tp-summary">
-        <span>💸 Общая стоимость: <b>{formatPrice(totalCost || tripData.total)} ₽</b></span>
-        {totalCost > budget ? (
-          <span className="tp-over">Превышает бюджет!</span>
-        ) : (
-          <span className="tp-in">В рамках бюджета</span>
-        )}
-      </div>
-    </div>
-  );
+    );
 };
 
 export default TripPlanner;
