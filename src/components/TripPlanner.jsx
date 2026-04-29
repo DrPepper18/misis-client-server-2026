@@ -2,7 +2,21 @@ import React from 'react';
 import './TripPlanner.css';
 
 const TripPlanner = ({ tripData }) => {
-    if (!tripData) return null;
+    if (!tripData) {
+        return (
+            <div className="trip-planner">
+                <div className="startup-panel">
+                    <div className="startup-content">
+                        <div className="startup-icon">✈️</div>
+                        <h2 className="startup-title">Начните своё путешествие</h2>
+                        <p className="startup-description">
+                            Заполните форму поиска и найдите лучшие предложения по авиабилетам и отелям
+                        </p>
+                    </div>
+                </div>
+            </div>
+        );
+    }
 
     const { destination, flights, hotels } = tripData;
     console.log("Rendering TripPlanner with data:", tripData);
@@ -27,7 +41,7 @@ const TripPlanner = ({ tripData }) => {
             
             <div className="panels-container">
                 {/* Левая панель: Полеты */}
-                <div className="panel-column" style={{ overflow: 'scroll'}}>
+                <div className="panel-column">
                     <h3 className="column-subtitle">✈️ Перелеты</h3>
                     <div className="cards-stack">
                         {flights && flights.length > 0 ? (
@@ -44,20 +58,20 @@ const TripPlanner = ({ tripData }) => {
                                     </div>
                                     <div className="flight-info">
                                         <div className="time-block">
-                                            <span className="label">{"Вылет "}</span>
+                                            <span className="date-sub">{flight.departureDate}</span>
+                                            <span className="label">{" — "}</span>
                                             <span className="time">{formatTime(flight.departure)}</span>
                                         </div>
-                                        <div className="time-block">
+                                        {/* <div className="time-block">
                                             <span className="label">{"Прибытие "}</span>
                                             <span className="time">{formatTime(flight.arrival)}</span>
-                                        </div>
+                                        </div> */}
                                         <div className="price-block">
-                                            <span className="label">{"Цена "}</span>
                                             <span className="price">{formatPrice(flight.price)}</span>
                                         </div>
                                     </div>
                                     <button className="book-button" onClick={() => window.open(`https://www.aviasales.ru${flight.link}`, '_blank')}>
-                                        Выбрать рейс
+                                        Купить билет
                                     </button>
                                 </div>
                             ))
@@ -84,10 +98,10 @@ const TripPlanner = ({ tripData }) => {
                                         <span className="stars">{'★'.repeat(hotel.stars)}</span>
                                     </div>
                                     <div className="flight-info">
-                                        <div className="time-block">
+                                        {/* <div className="time-block">
                                             <span className="label">{"Рейтинг "}</span>
                                             <span className="time">{hotel.stars}.0</span>
-                                        </div>
+                                        </div> */}
                                         <div className="price-block">
                                             <span className="label">{"За ночь "}</span>
                                             <span className="price">{formatPrice(hotel.price)}</span>

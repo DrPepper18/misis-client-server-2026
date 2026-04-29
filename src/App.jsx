@@ -1,7 +1,6 @@
 import React from 'react';
 import { createAssistant, createSmartappDebugger } from '@salutejs/client';
 import './App.css';
-
 import TripPlanner from './components/TripPlanner';
 
 const initializeAssistant = (getState) => {
@@ -60,8 +59,10 @@ export class App extends React.Component {
                       airline: f.airline,
                       price: f.price,
                       departure: f.departure_at?.slice(11, 16),
+                      departureDate: f.departure_at?.slice(0, 10),
                       arrival: f.return_at?.slice(11, 16) || '',
-                      flightNumber: f.flight_number
+                      flightNumber: f.flight_number,
+                      link: f.link
                   })),
                   // Добавляем отели
                   hotels: (payload.hotels || []).map(h => ({
@@ -88,7 +89,7 @@ export class App extends React.Component {
         </header> */}
 
         <main className="content">
-          {tripData && <TripPlanner tripData={tripData} />}
+          <TripPlanner tripData={tripData || null} />
         </main>
       </div>
     );

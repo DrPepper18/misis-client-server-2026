@@ -37,8 +37,8 @@
 
 .panel-column {
   flex: 1;
-  width: 100%;
-  height: 100%;
+  height: 60vh;
+  overflow: scroll;
 }
 
 .column-subtitle {
@@ -158,4 +158,84 @@
 .book-button.secondary {
     background: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
     box-shadow: 0 4px 12px rgba(253, 160, 133, 0.3);
+}
+
+/* Стартовая панель */
+.startup-panel {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 60vh;
+  animation: fadeIn 0.6s ease-in;
+}
+
+.startup-content {
+  text-align: center;
+  max-width: 500px;
+  padding: 60px 40px;
+}
+
+.startup-icon {
+  font-size: 5em;
+  display: block;
+  margin-bottom: 24px;
+  animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-20px); }
+}
+
+.startup-title {
+  font-size: 2.4em;
+  font-weight: 800;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin: 0 0 16px 0;
+}
+
+.startup-description {
+  font-size: 1.1em;
+  color: #718096;
+  margin: 0 0 40px 0;
+  line-height: 1.6;
+}
+
+.startup-features {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.feature {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 16px;
+  background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%);
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+  transition: all 0.3s ease;
+}
+
+.feature:hover {
+  background: linear-gradient(135deg, #edf2f7 0%, #e2e8f0 100%);
+  transform: translateX(4px);
+  border-color: #667eea;
+}
+
+.feature-icon {
+  font-size: 1.4em;
+  display: inline-block;
+  min-width: 30px;
+}
+
+.feature span:last-child {
+  font-size: 1em;
+  color: #4a5568;
+  font-weight: 500;
 }
