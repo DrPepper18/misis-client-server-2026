@@ -7,8 +7,17 @@ function parseBudget(parseTree) {
 // Поиск IATA кода
 function getIataCode(cityName) {
     var cityToIATA = {
-        "Москва": "MOW", "Санкт-Петербург": "LED", "Питер": "LED",
-        "Сочи": "AER", "Адлер": "AER", "Казань": "KZN"
+        "Москва": "MOW",
+        "Санкт-Петербург": "LED",
+        "Питер": "LED",
+        "Сочи": "AER",
+        "Адлер": "AER",
+        "Казань": "KZN",
+        "Екатеринбург": "SVX",
+        "Владивосток": "VVO",
+        "Ростов-на-Дону": "RVI",
+        "Калининград": "KGD",
+        "Новосибирск": "OVB"
     };
     return cityToIATA[cityName] || (cityName ? cityName.substring(0, 3).toUpperCase() : "LED");
 }
@@ -42,8 +51,8 @@ function planTripData(parseTree) {
     var monthText = (parseTree.month && parseTree.month[0]) ? parseTree.month[0].text : "мая";
     var monthNum = getMonthNumber(monthText);
     
-    // Собираем дату для API (YYYY-MM-DD)
-    var departureDate = "2026-" + monthNum + "-" + day;
+    var currentYear = new Date().getFullYear(); 
+    var departureDate = currentYear + "-" + monthNum + "-" + day;
     
     var destIATA = getIataCode(rawCity);
 
@@ -83,53 +92,59 @@ function planTripData(parseTree) {
     // Качественный справочник популярных отелей
     var hotelDatabase = {
         "Москва": { 
-            name: "Metropol Hotel Moscow", 
-            priceMod: 1.2, 
-            stars: 5, 
-            link: "https://metropol-moscow.ru/", 
-            id: 101 
+            name: "Метрополь", 
+            priceMod: 1.2, stars: 5, id: 101,
+            link: "https://metropol-moscow.ru/" 
         },
         "Санкт-Петербург": { 
             name: "Гранд Отель Европа", 
-            priceMod: 1.1, 
-            stars: 5, 
-            link: "https://www.belmond.com/hotels/europe/russia/st-petersburg/belmond-grand-hotel-europe/", 
-            id: 102 
+            priceMod: 1.1, stars: 5, id: 102,
+            link: "https://www.grandhoteleuropa.com/" 
         },
         "Питер": { 
-            name: "Астория Рокко Форте", 
-            priceMod: 1.1, 
-            stars: 5, 
-            link: "https://www.roccofortehotels.com/hotels-and-resorts/hotel-astoria/", 
-            id: 103 
+            name: "Отель Астория", 
+            priceMod: 1.1, stars: 5, id: 103,
+            link: "https://www.astoria-hotel.ru/" 
         },
         "Сочи": { 
-            name: "Отель Камелия Сочи", 
-            priceMod: 1.3, 
-            stars: 5, 
-            link: "https://kamelia-sochi.ru/", 
-            id: 104
+            name: "Отель Камелия", 
+            priceMod: 1.3, stars: 5, id: 104,
+            link: "https://kamelia-sochi.ru/" 
         },
         "Адлер": { 
             name: "Radisson Collection Paradise", 
-            priceMod: 1.2, 
-            stars: 5, 
-            link: "https://www.radissonhotels.com/ru-ru/hotels/radisson-collection-sochi-paradise-resort-spa", 
-            id: 105 
+            priceMod: 1.2, stars: 5, id: 105,
+            link: "https://www.radissonhotels.com/ru-ru/hotels/radisson-collection-sochi-paradise-resort-spa" 
         },
         "Казань": { 
-            name: "Отель Ривьера", 
-            priceMod: 0.9, 
-            stars: 4, 
-            link: "https://kazanriviera.ru/hotel/", 
-            id: 106 
+            name: "Kazan Palace by TASIGO", 
+            priceMod: 1.0, stars: 5, id: 106,
+            link: "https://tasigo.com/ru/hotels/kazan-palace/" 
+        },
+        "Екатеринбург": { 
+            name: "Hyatt Regency Ekaterinburg", 
+            priceMod: 0.9, stars: 5, id: 109,
+            link: "https://rg-ekaterinburghotel.ru/rooms/" 
+        },
+        "Владивосток": { 
+            name: "Lotte Hotel Vladivostok", 
+            priceMod: 1.1, stars: 5, id: 110,
+            link: "https://www.lottehotel.com/vladivostok-hotel/" 
+        },
+        "Ростов-на-Дону": { 
+            name: "Grand Rostov by Hyatt Regency", 
+            priceMod: 0.8, stars: 5, id: 111,
+            link: "https://grandrostovhotel.com/" 
+        },
+        "Калининград": { 
+            name: "Crystal House Suite Hotel", 
+            priceMod: 1.0, stars: 5, id: 108,
+            link: "https://crystalhousehotel.ru/" 
         },
         "Новосибирск": { 
-            name: "Marriott Novosibirsk", 
-            priceMod: 0.8, 
-            stars: 5, 
-            link: "https://www.marriott.com/hotels/travel/ovbnm-novosibirsk-marriott-hotel/", 
-            id: 107 
+            name: "Grand Autograph Hotel", 
+            priceMod: 0.8, stars: 5, id: 107,
+            link: "https://grandautograph.ru/" 
         }
     };
 

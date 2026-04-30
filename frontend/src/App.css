@@ -1,9 +1,9 @@
 :root {
-  --primary-color: white;
-  --bg-color: darkgray;
-  --card-bg: #ffffff;
-  --text-main: #333333;
-  --text-muted: #666666;
+  --primary-color: #e0e0e0;
+  --bg-color: #0f0f0f;
+  --card-bg: #1e1e1e;
+  --text-main: #e0e0e0;
+  --text-muted: #a0a0a0;
   --border-radius: 16px;
 }
 
@@ -36,12 +36,13 @@ body {
 }
 
 .content {
-  background: var(--card-bg);
+  /* background: var(--card-bg); */
   padding: 20px;
   border-radius: var(--border-radius);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
   margin-bottom: 20px;
   height: 80vh;
+  border: 1px solid #2a2a2a;
 }
 
 .status-bar {
@@ -49,9 +50,10 @@ body {
   line-height: 1.4;
   margin-bottom: 16px;
   padding: 12px;
-  background: #eef6ff;
+  background: #1a2a3a;
   border-radius: 12px;
-  color: #1565c0;
+  color: #4da6ff;
+  border: 1px solid #2a3a4a;
 }
 
 /* Стили для TripPlanner */
@@ -92,12 +94,13 @@ body {
 
 .output-textarea {
   width: 100%;
-  border: 1px solid #ddd;
+  border: 1px solid #3a3a3a;
   border-radius: 12px;
   padding: 12px;
   font-family: inherit;
   font-size: 0.85rem;
-  background: #fafafa;
+  background: #0a0a0a;
+  color: #e0e0e0;
   color: #888;
   resize: none;
   box-sizing: border-box;

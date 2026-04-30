@@ -4,6 +4,7 @@
   margin: 40px auto;
   padding: 0 16px;
   animation: fadeIn 0.5s ease-in;
+  background: #0f0f0f;
 }
 
 @keyframes fadeIn {
@@ -38,12 +39,13 @@
 .panel-column {
   flex: 1;
   height: 60vh;
-  overflow: scroll;
+  overflow-y: scroll;
+  padding: 10px;
 }
 
 .column-subtitle {
   font-size: 1.4em;
-  color: #4a5568;
+  color: #a0d4ff;
   margin-bottom: 20px;
   padding-left: 8px;
   border-left: 4px solid #667eea;
@@ -57,14 +59,14 @@
 
 /* Сохраняем твои стили карточек */
 .flight-card {
-  background: linear-gradient(135deg, #ffffff 0%, #f7fafc 100%);
-  border: 1px solid #e2e8f0;
+  background: linear-gradient(135deg, #1e1e1e 0%, #272727 100%);
+  border: 1px solid #3a3a3a;
   border-radius: 16px;
   padding: 24px;
   display: flex;
   flex-direction: column;
   gap: 16px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
   overflow: hidden;
@@ -81,8 +83,9 @@
 }
 
 .flight-card:hover {
-  box-shadow: 0 12px 20px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 12px 20px rgba(102, 126, 234, 0.3);
   transform: translateY(-4px);
+  border-color: #667eea;
 }
 
 .flight-card:hover::before { transform: scaleX(1); }
@@ -135,7 +138,7 @@
 
 .hotel-name {
   font-weight: 700;
-  color: #2d3748;
+  color: #e0e0e0;
   font-size: 1.1em;
 }
 
@@ -167,12 +170,16 @@
   align-items: center;
   min-height: 60vh;
   animation: fadeIn 0.6s ease-in;
+  background: linear-gradient(135deg, #1a1a1a 0%, #0f0f0f 100%);
 }
 
 .startup-content {
   text-align: center;
   max-width: 500px;
   padding: 60px 40px;
+  background: rgba(30, 30, 30, 0.5);
+  border-radius: 20px;
+  border: 1px solid #3a3a3a;
 }
 
 .startup-icon {
