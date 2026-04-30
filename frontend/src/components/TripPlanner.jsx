@@ -86,12 +86,6 @@ const TripPlanner = ({ tripData }) => {
                         {hotels && hotels.length > 0 ? (
                             hotels.map((hotel, index) => (
                                 <div key={index} className="flight-card hotel-card">
-                                    <div className="hotel-image-container">
-                                        <img 
-                                            src={`https://photo.hotellook.com/image_v2/limit/h${hotel.id}_0/400/240.jpg`} 
-                                            alt={hotel.name}
-                                        />
-                                    </div>
                                     <div className="flight-header">
                                         <span className="hotel-name">{hotel.name}</span>
                                         <span className="stars">{'★'.repeat(hotel.stars)}</span>

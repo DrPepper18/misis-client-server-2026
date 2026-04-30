@@ -21,6 +21,19 @@ body {
 .App {
   padding: 20px;
   box-sizing: border-box;
+  width: 100%;
+  max-width: 1400px;
+}
+
+/* Мобильные устройства (до 480px) */
+@media (max-width: 480px) {
+  body {
+    padding: 0;
+  }
+
+  .App {
+    padding: 12px;
+  }
 }
 
 .App-header {
@@ -35,14 +48,48 @@ body {
   color: var(--primary-color);
 }
 
+/* Мобильные адаптации заголовка */
+@media (max-width: 768px) {
+  .App-header h1 {
+    font-size: 1.3rem;
+    margin-bottom: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .App-header {
+    margin-bottom: 16px;
+  }
+
+  .App-header h1 {
+    font-size: 1.1rem;
+  }
+}
+
 .content {
   /* background: var(--card-bg); */
   padding: 20px;
   border-radius: var(--border-radius);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
   margin-bottom: 20px;
-  height: 80vh;
   border: 1px solid #2a2a2a;
+}
+
+/* Мобильные адаптации контента */
+@media (max-width: 768px) {
+  .content {
+    padding: 16px;
+    border-radius: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .content {
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  }
 }
 
 .status-bar {
@@ -54,6 +101,24 @@ body {
   border-radius: 12px;
   color: #4da6ff;
   border: 1px solid #2a3a4a;
+}
+
+/* Мобильные адаптации статуса */
+@media (max-width: 768px) {
+  .status-bar {
+    font-size: 0.9rem;
+    padding: 10px;
+    margin-bottom: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .status-bar {
+    font-size: 0.85rem;
+    padding: 8px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+  }
 }
 
 /* Стили для TripPlanner */
@@ -78,6 +143,37 @@ body {
   color: var(--text-muted);
 }
 
+/* Мобильные адаптации секций */
+@media (max-width: 768px) {
+  .section {
+    margin-bottom: 12px;
+  }
+
+  .section h4 {
+    font-size: 0.95rem;
+  }
+
+  .section p {
+    font-size: 0.85rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .section {
+    margin-bottom: 10px;
+  }
+
+  .section h4 {
+    font-size: 0.9rem;
+    margin: 0 0 6px 0;
+  }
+
+  .section p {
+    font-size: 0.8rem;
+    margin: 3px 0;
+  }
+}
+
 .total {
   margin-top: 15px;
   padding-top: 10px;
@@ -85,6 +181,23 @@ body {
   font-size: 1.1rem;
   color: var(--primary-color);
   text-align: right;
+}
+
+/* Мобильные адаптации итога */
+@media (max-width: 768px) {
+  .total {
+    margin-top: 12px;
+    padding-top: 8px;
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .total {
+    margin-top: 10px;
+    padding-top: 8px;
+    font-size: 0.95rem;
+  }
 }
 
 /* Debug панель (скрытая или аккуратная) */
@@ -99,11 +212,27 @@ body {
   padding: 12px;
   font-family: inherit;
   font-size: 0.85rem;
-  background: #0a0a0a;
-  color: #e0e0e0;
-  color: #888;
-  resize: none;
-  box-sizing: border-box;
+}
+
+/* Мобильные адаптации текстареи */
+@media (max-width: 768px) {
+  .output-textarea {
+    font-size: 0.8rem;
+    padding: 10px;
+    border-radius: 8px;
+  }
+}
+
+@media (max-width: 480px) {
+  .debug-panel {
+    margin-top: 16px;
+  }
+
+  .output-textarea {
+    font-size: 0.75rem;
+    padding: 8px;
+    border-radius: 6px;
+  }
 }
 
 .loader {
