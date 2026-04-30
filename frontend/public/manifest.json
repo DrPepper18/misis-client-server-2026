@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "За тридевять земель",
+  "name": "За тридевять земель - демо-приложение для Salute JS",
   "icons": [
     {
       "src": "favicon.ico",
