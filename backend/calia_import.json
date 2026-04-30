@@ -1,0 +1,19 @@
+{
+  "project" : {
+    "id" : "misis_client_server-9518401-OFE",
+    "name" : "misis_client_server-9518401-OFE",
+    "folder" : "/jaicp"
+  },
+  "settings" : {
+    "language" : "ru",
+    "spellingCorrection" : false,
+    "classificationAlgorithm" : "sts",
+    "timezone" : "UTC",
+    "shared" : false,
+    "businessShared" : false,
+    "business" : false
+  },
+  "intents" : [ ],
+  "entities" : [ ],
+  "enabledSystemEntities" : [ "duckling.number", "duckling.time", "duckling.duration", "duckling.phone-number", "duckling.email", "duckling.url" ]
+}
