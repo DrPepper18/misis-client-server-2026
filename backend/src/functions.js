@@ -80,13 +80,78 @@ function planTripData(parseTree) {
         }).slice(0, 5);
     }
 
-    // Отели (учитываем разницу в днях, если нужно, но для MVP просто мокаем цену)
+    // Качественный справочник популярных отелей
+    var hotelDatabase = {
+        "Москва": { 
+            name: "Metropol Hotel Moscow", 
+            priceMod: 1.2, 
+            stars: 5, 
+            link: "https://metropol-moscow.ru/", 
+            id: 101 
+        },
+        "Санкт-Петербург": { 
+            name: "Гранд Отель Европа", 
+            priceMod: 1.1, 
+            stars: 5, 
+            link: "https://www.belmond.com/hotels/europe/russia/st-petersburg/belmond-grand-hotel-europe/", 
+            id: 102 
+        },
+        "Питер": { 
+            name: "Астория Рокко Форте", 
+            priceMod: 1.1, 
+            stars: 5, 
+            link: "https://www.roccofortehotels.com/hotels-and-resorts/hotel-astoria/", 
+            id: 103 
+        },
+        "Сочи": { 
+            name: "Отель Камелия Сочи", 
+            priceMod: 1.3, 
+            stars: 5, 
+            link: "https://kamelia-sochi.ru/", 
+            id: 104
+        },
+        "Адлер": { 
+            name: "Radisson Collection Paradise", 
+            priceMod: 1.2, 
+            stars: 5, 
+            link: "https://www.radissonhotels.com/ru-ru/hotels/radisson-collection-sochi-paradise-resort-spa", 
+            id: 105 
+        },
+        "Казань": { 
+            name: "Отель Ривьера", 
+            priceMod: 0.9, 
+            stars: 4, 
+            link: "https://kazanriviera.ru/hotel/", 
+            id: 106 
+        },
+        "Новосибирск": { 
+            name: "Marriott Novosibirsk", 
+            priceMod: 0.8, 
+            stars: 5, 
+            link: "https://www.marriott.com/hotels/travel/ovbnm-novosibirsk-marriott-hotel/", 
+            id: 107 
+        }
+    };
+
+    // 4. ОТЕЛИ (Качественный мок на основе города)
+    var hotelData = hotelDatabase[rawCity] || { 
+        name: "Azimut Hotel " + rawCity, 
+        priceMod: 0.7, 
+        stars: 3, 
+        link: "https://azimuthotels.com/", 
+        id: 999 
+    };
+
+    // Вычисляем цену, исходя из остатка бюджета, но с учетом "престижности" отеля (priceMod)
     var hotelBudget = totalBudget - (payload.flights[0] ? payload.flights[0].price : flightLimit);
+    var pricePerNight = Math.floor((hotelBudget / 3) * hotelData.priceMod);
+
     payload.hotels = [{
-        name: "Отель " + rawCity + " Центральный",
-        price: Math.floor(hotelBudget / 3),
-        stars: 4,
-        id: 12153
+        name: hotelData.name,
+        price: pricePerNight,
+        stars: hotelData.stars,
+        link: hotelData.link,
+        id: hotelData.id
     }];
 
     return payload;

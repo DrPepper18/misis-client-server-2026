@@ -69,7 +69,8 @@ export class App extends React.Component {
                       name: h.name || h.hotelName,
                       price: h.priceAvg || h.price,
                       stars: h.stars,
-                      id: h.hotelId || h.id
+                      id: h.hotelId || h.id,
+                      link: h.link || `https://www.booking.com/hotel/${h.id}.html` // Пример ссылки на отель
                   }))
               },
               answer: `Нашёл билеты и отели в ${payload.destination}!`

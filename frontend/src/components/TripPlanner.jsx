@@ -90,7 +90,6 @@ const TripPlanner = ({ tripData }) => {
                                         <img 
                                             src={`https://photo.hotellook.com/image_v2/limit/h${hotel.id}_0/400/240.jpg`} 
                                             alt={hotel.name}
-                                            onError={(e) => e.target.src = 'https://via.placeholder.com/400x240?text=Hotel'}
                                         />
                                     </div>
                                     <div className="flight-header">
@@ -107,7 +106,9 @@ const TripPlanner = ({ tripData }) => {
                                             <span className="price">{formatPrice(hotel.price)}</span>
                                         </div>
                                     </div>
-                                    <button className="book-button secondary">Забронировать</button>
+                                    <button className="book-button secondary"onClick={() => window.open(hotel.link, '_blank')}>
+                                        Забронировать
+                                    </button>
                                 </div>
                             ))
                         ) : <div className="no-flights">Отелей не найдено</div>}
