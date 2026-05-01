@@ -37,7 +37,7 @@ function getMonthNumber(monthName) {
 }
 
 function planTripData(parseTree) {
-    var token = "da7bee055610d9dc36ddd9b5fb42fa9a";
+    var token = "YOUR TOKEN HERE";
     var rawCity = parseTree.city[0].text;
     
     // Извлекаем бюджет
