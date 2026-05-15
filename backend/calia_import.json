@@ -1,19 +1,77 @@
 {
   "project" : {
-    "id" : "misis_client_server-9518401-OFE",
-    "name" : "misis_client_server-9518401-OFE",
+    "id" : "misis_client_server-9518401-Uhl",
+    "name" : "misis_client_server-9518401-Uhl",
     "folder" : "/jaicp"
   },
   "settings" : {
     "language" : "ru",
     "spellingCorrection" : false,
     "classificationAlgorithm" : "sts",
-    "timezone" : "UTC",
+    "timezone" : "Europe/Moscow",
+    "extendedSettings" : {
+      "tokenizerEngine" : "default"
+    },
     "shared" : false,
     "businessShared" : false,
     "business" : false
   },
   "intents" : [ ],
-  "entities" : [ ],
-  "enabledSystemEntities" : [ "duckling.number", "duckling.time", "duckling.duration", "duckling.phone-number", "duckling.email", "duckling.url" ]
+  "entities" : [ {
+    "entity" : {
+      "id" : 796605,
+      "name" : "City",
+      "enabled" : true,
+      "type" : "annotation",
+      "priority" : 1,
+      "noSpelling" : false,
+      "noMorph" : false,
+      "phoneticSearch" : false,
+      "fuzzySearch" : false,
+      "client" : false,
+      "subject" : "Города"
+    },
+    "records" : [ {
+      "id" : 27468569,
+      "type" : "synonyms",
+      "rule" : [ "Адлер" ],
+      "value" : ""
+    }, {
+      "id" : 27467090,
+      "type" : "synonyms",
+      "rule" : [ "Владивосток" ],
+      "value" : ""
+    }, {
+      "id" : 27467089,
+      "type" : "synonyms",
+      "rule" : [ "Казань" ],
+      "value" : ""
+    }, {
+      "id" : 27469631,
+      "type" : "synonyms",
+      "rule" : [ "Калининград" ],
+      "value" : ""
+    }, {
+      "id" : 27467088,
+      "type" : "synonyms",
+      "rule" : [ "Новосибирск" ],
+      "value" : ""
+    }, {
+      "id" : 27465161,
+      "type" : "synonyms",
+      "rule" : [ "Ростов-на-Дону" ],
+      "value" : ""
+    }, {
+      "id" : 27463117,
+      "type" : "synonyms",
+      "rule" : [ "Санкт-Петербург", "Питер" ],
+      "value" : ""
+    }, {
+      "id" : 27469632,
+      "type" : "synonyms",
+      "rule" : [ "Сочи" ],
+      "value" : ""
+    } ]
+  } ],
+  "enabledSystemEntities" : [ "duckling.number", "duckling.phone-number", "duckling.email", "duckling.url", "duckling.date", "duckling.amount-of-money" ]
 }

@@ -8,13 +8,12 @@ const initializeAssistant = (getState) => {
     return createSmartappDebugger({
       token: process.env.REACT_APP_TOKEN ?? '',
       initPhrase: `Запусти ${process.env.REACT_APP_SMARTAPP}`,
-      getState,                                           
-      // getRecoveryState: getState,                                           
+      getState,                                                                                     
       nativePanel: {
         defaultText: 'Говорите!',
         screenshotMode: false,
         tabIndex: -1,
-    },
+      },
     });
   }
   return createAssistant({ getState });

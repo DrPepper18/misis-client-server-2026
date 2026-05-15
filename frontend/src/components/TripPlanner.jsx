@@ -10,8 +10,9 @@ const TripPlanner = ({ tripData }) => {
                         <div className="startup-icon">✈️</div>
                         <h2 className="startup-title">Начните своё путешествие</h2>
                         <p className="startup-description">
-                            Заполните форму поиска и найдите лучшие предложения по авиабилетам и отелям
+                            Скажите, например: "Хочу тур в Сочи 10 июня за 50000 рублей"
                         </p>
+                        {/* Хочу тур в Питер с 10 по 15 июня за 50 000 ₽ */}
                     </div>
                 </div>
             </div>
