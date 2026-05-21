@@ -71,7 +71,7 @@ const TripPlanner = ({ tripData }) => {
                                             <span className="price">{formatPrice(flight.price)}</span>
                                         </div>
                                     </div>
-                                    <button className="book-button" onClick={() => window.open(`https://www.aviasales.ru${flight.link}`, '_blank')}>
+                                    <button className="book-button" onClick={() => window.location.href = `https://www.aviasales.ru${flight.link}`}>
                                         Купить билет
                                     </button>
                                 </div>
@@ -101,7 +101,7 @@ const TripPlanner = ({ tripData }) => {
                                             <span className="price">{formatPrice(hotel.price)}</span>
                                         </div>
                                     </div>
-                                    <button className="book-button secondary"onClick={() => window.open(hotel.link, '_blank')}>
+                                    <button className="book-button secondary"onClick={() => window.location.href = hotel.link}>
                                         Забронировать
                                     </button>
                                 </div>
