@@ -16,7 +16,7 @@ function getIataCode(cityName) {
 }
 
 function fetchTripResults(cityName, departureDate, totalBudget) {
-    var token = "..."; // Твой токен от Aviasales
+    var token = "HERE IS YOUR TOKEN"; // Токен для доступа к API Aviasales
     var destIATA = getIataCode(cityName);
     var flightLimit = Math.floor(totalBudget * 0.3);
 
@@ -54,65 +54,65 @@ function fetchTripResults(cityName, departureDate, totalBudget) {
     // Твой справочник отелей (оставим его внутри или вынесем в константу выше)
     var hotelDatabase = {
         "Москва": { 
-            name: "Метрополь", 
+            name: "Raddison Blu", 
             priceMod: 1.2, stars: 5, id: 101,
-            link: "https://metropol-moscow.ru/" 
+            link: "https://ostrovok.ru/hotel/russia/moscow/" 
         },
         "Санкт-Петербург": { 
-            name: "Гранд Отель Европа", 
-            priceMod: 1.1, stars: 5, id: 102,
-            link: "https://www.grandhoteleuropa.com/" 
+            name: "Отель Radisson Соня Санкт-Петербург", 
+            priceMod: 1.1, stars: 4, id: 102,
+            link: "https://ostrovok.ru/hotel/russia/st._petersburg/" 
         },
         "Питер": { 
-            name: "Отель Астория", 
+            name: "Отель Radisson Соня Санкт-Петербург", 
             priceMod: 1.1, stars: 5, id: 103,
-            link: "https://www.astoria-hotel.ru/" 
+            link: "https://ostrovok.ru/hotel/russia/st._petersburg/" 
         },
         "Сочи": { 
-            name: "Отель Камелия", 
+            name: "Гостевой дом Бутик-Отель Мондриан", 
             priceMod: 1.3, stars: 5, id: 104,
-            link: "https://kamelia-sochi.ru/" 
+            link: "https://ostrovok.ru/hotel/russia/sochi/" 
         },
         "Адлер": { 
-            name: "Radisson Collection Paradise", 
+            name: "Отель Охотник", 
             priceMod: 1.2, stars: 5, id: 105,
-            link: "https://www.radissonhotels.com/ru-ru/hotels/radisson-collection-sochi-paradise-resort-spa" 
+            link: "https://ostrovok.ru/hotel/russia/adler/" 
         },
         "Казань": { 
-            name: "Kazan Palace by TASIGO", 
-            priceMod: 1.0, stars: 5, id: 106,
-            link: "https://tasigo.com/ru/hotels/kazan-palace/" 
+            name: "Отель Муниб", 
+            priceMod: 1.0, stars: 4, id: 106,
+            link: "https://ostrovok.ru/hotel/russia/kazan/" 
         },
         "Екатеринбург": { 
-            name: "Hyatt Regency Ekaterinburg", 
-            priceMod: 0.9, stars: 5, id: 109,
-            link: "https://rg-ekaterinburghotel.ru/rooms/" 
+            name: "Отель Marins Екатеринбург", 
+            priceMod: 0.9, stars: 3, id: 109,
+            link: "https://ostrovok.ru/hotel/russia/yekaterinburg/" 
         },
         "Владивосток": { 
             name: "Lotte Hotel Vladivostok", 
             priceMod: 1.1, stars: 5, id: 110,
-            link: "https://www.lottehotel.com/vladivostok-hotel/" 
+            link: "https://ostrovok.ru/hotel/russia/vladivostok/" 
         },
         "Ростов-на-Дону": { 
-            name: "Grand Rostov by Hyatt Regency", 
-            priceMod: 0.8, stars: 5, id: 111,
-            link: "https://grandrostovhotel.com/" 
+            name: "Гостиница Radisson Blu, Ростов-на-Дону", 
+            priceMod: 0.8, stars: 4, id: 111,
+            link: "https://ostrovok.ru/hotel/russia/rostov-on-don/" 
         },
         "Калининград": { 
-            name: "Crystal House Suite Hotel", 
-            priceMod: 1.0, stars: 5, id: 108,
-            link: "https://crystalhousehotel.ru/" 
+            name: "Отель Холидей Инн Калининград", 
+            priceMod: 1.0, stars: 4, id: 108,
+            link: "https://ostrovok.ru/hotel/russia/kaliningrad/" 
         },
         "Новосибирск": { 
-            name: "Grand Autograph Hotel", 
-            priceMod: 0.8, stars: 5, id: 107,
-            link: "https://grandautograph.ru/" 
+            name: "Отель Marins Новосибирск", 
+            priceMod: 0.8, stars: 4, id: 107,
+            link: "https://ostrovok.ru/hotel/russia/novosibirsk/" 
         }
     };
 
     var hotelData = hotelDatabase[cityName] || { 
-        name: "Azimut Hotel " + cityName, 
-        priceMod: 0.7, stars: 3, link: "https://azimuthotels.com/", id: 999 
+        name: "Отель в " + cityName, 
+        priceMod: 0.7, stars: 3, link: "https://ostrovok.ru/hotel/russia/" + cityName, id: 999 
     };
 
     var hotelBudget = totalBudget - (payload.flights[0] ? payload.flights[0].price : flightLimit);
